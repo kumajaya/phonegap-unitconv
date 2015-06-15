@@ -1,46 +1,1265 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Unit Conversion</title>
+		<meta name="description" content="CheCalc - Unit Conversion - Free unit converter to easily convert between different
+      		  units of measurement for engineers, scientists and technicians." />
+		<meta name="keywords" content="Unit Conversion" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			body {
+				padding-top: 60px;
+				padding-bottom: 40px;
+			}
+		</style>
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet"/>
+		<style type="text/css">
+			.resEx1 {
+				width: 50px;
+			}
+			.table th, .table td {
+				border-top: none;
+			}
+			a:hover, a:focus {
+				text-decoration: none;
+			}
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+			@media (min-width: 1200px) {
 
-    http://www.apache.org/licenses/LICENSE-2.0
+				.tabR2 {
+					width: 200px;
+				}
+				.tabR3 {
+					width: 200px;
+				}
+			}
+			@media (min-width: 980px) and (max-width: 1199px) {
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+				.tabR2 {
+					width: 200px;
+				}
+				.tabR3 {
+					width: 200px;
+				}
+			}
+			@media (min-width: 768px) and (max-width: 979px) {
+
+				.tabR2 {
+					width: 150px;
+				}
+				.tabR3 {
+					width: 150px;
+				}
+			}
+			@media (max-width: 767px) {
+
+				.tabR2 {
+					width: 200px;
+				}
+				.tabR3 {
+					width: 200px;
+				}
+			}
+			@media (max-width: 480px) {
+
+				.tabR2 {
+					width: 100px;
+				}
+				.tabR3 {
+					width: 120px;
+				}
+			}
+
+		</style>
+
+		<script src="js/unitconv.js"></script>
+		
+	</head>
+
+	<body onload="init()">
+
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="http://checalc.com/index.html">CheCalc</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav pull-right" >
+							<li>
+								<a href="http://checalc.com/index.html"><i class="icon-home icon-white"></i> Home</a>
+							</li>
+							 <li><a href="http://checalc.com/guideline.html"><i class="icon-book icon-white"></i> Guidelines</a></li>
+              <li class="active"><a href="http://checalc.com/calculation.html"><i class="icon-pencil icon-white"></i> Calculation</a></li>
+              <li><a href="http://checalc.com/spreadsheet.html"><i class="icon-list icon-white"></i> Spreadsheet</a></li>
+              <li><a href="mailto:info@checalc.com"><i class="icon-envelope icon-white"></i> Contact</a></li>
+							<li>
+								<a href="unitconv.html#mySettings" data-toggle="modal"><i class="icon-cog icon-white"></i> Settings</a>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div id="mySettings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">Settings</h3>
+			</div>
+			<div class="modal-body">
+
+				<div>
+					<span class="calc1">Significant Digits</span>
+					<select class="calc2a" id="SDOpt" onblur="OptChange();" onchange="OptChange();">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3" selected="selected">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+					</select>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="container">
+			
+			<div class="row-fluid">
+      		 <div class="inform-bar">
+      		  <strong>Unit Conversion</strong> - Free unit converter to easily convert between different
+      		  units of measurement for engineers, scientists and technicians.
+ 			 </div>
+ 			</div>
+ 			
+ 			<br>
+
+			<div class = "row-fluid">
+
+				<div class="span6">
+
+					<div class="accordion" id="acc1">
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Area" id="AreaA"> Area</a>
+							</div>
+							<div id="Area" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res21" class="alert alert-info">
+										Enter Area 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Area1" value="10.0" class="tabR2" onfocus="AreaCalc()"  onchange="AreaCalc()" onkeyup="AreaCalc()" onblur="AreaCalc()">
+										<select id="AreaSel1" class="tabR3" onblur="AreaCalc()" onchange="AreaCalc()">
+											<option value="1" selected="selected">meter&sup2;</option>
+											<option value="2">acre</option>
+											<option value="3">are</option>
+											<option value="4">centimeter&sup2;</option>
+											<option value="5">foot&sup2;</option>
+											<option value="6">hectare</option>
+											<option value="7">inch&sup2;</option>
+											<option value="8">kilometer&sup2;</option>
+											<option value="9">mile&sup2;</option>
+											<option value="10">millimeter&sup2;</option>
+											<option value="11">yard&sup2;</option>											
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Area2" value="254.0" class="tabR2" onfocus="AreaCalc()"  onchange="AreaCalc()" onkeyup="AreaCalc()" onblur="AreaCalc()">
+										<select id="AreaSel2" class="tabR3" onblur="AreaCalc()" onchange="AreaCalc()">
+											<option value="1">meter&sup2;</option>
+											<option value="2">acre</option>
+											<option value="3">are</option>
+											<option value="4">centimeter&sup2;</option>
+											<option value="5" selected="selected">foot&sup2;</option>
+											<option value="6">hectare</option>
+											<option value="7">inch&sup2;</option>
+											<option value="8">kilometer&sup2;</option>
+											<option value="9">mile&sup2;</option>
+											<option value="10">millimeter&sup2;</option>
+											<option value="11">yard&sup2;</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Length" id="LenA"> Length</a>
+							</div>
+							<div id="Length" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res1" class="alert alert-info">
+										Enter Length / Distance 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Len1" value="10.0" class="tabR2" onfocus="LenCalc()"  onchange="LenCalc()" onkeyup="LenCalc()" onblur="LenCalc()">
+										<select id="LenSel1" class="tabR3" onblur="LenCalc()" onchange="LenCalc()">
+											<option value="1">meter</option>
+											<option value="2">kilometer</option>
+											<option value="3">centimeter</option>
+											<option value="4">millimeter</option>
+											<option value="5">micron</option>
+											<option value="6">nanometer</option>
+											<option value="7">angstorm</option>
+											<option value="8">nautical mile</option>
+											<option value="9">mile</option>
+											<option value="10">yard</option>
+											<option value="11">foot</option>
+											<option value="12" selected="selected">inch</option>
+											<option value="13">microinch</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Len2" value="254.0" class="tabR2" onfocus="LenCalc()"  onchange="LenCalc()" onkeyup="LenCalc()" onblur="LenCalc()">
+										<select id="LenSel2" class="tabR3" onblur="LenCalc()" onchange="LenCalc()">
+											<option value="1">meter</option>
+											<option value="2">kilometer</option>
+											<option value="3">centimeter</option>
+											<option value="4" selected="selected">millimeter</option>
+											<option value="5">micron</option>
+											<option value="6">nanometer</option>
+											<option value="7">angstorm</option>
+											<option value="8">nautical mile</option>
+											<option value="9">mile</option>
+											<option value="10">yard</option>
+											<option value="11">foot</option>
+											<option value="12">inch</option>
+											<option value="13">microinch</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Mass" id="MassA"> Mass</a>
+							</div>
+							<div id="Mass" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res2" class="alert alert-info">
+										Enter Mass 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Mass1" value="10.0" class="tabR2" onfocus="MassCalc()"  onchange="MassCalc()" onkeyup="MassCalc()" onblur="MassCalc()">
+										<select id="MassSel1" class="tabR3" onblur="MassCalc()" onchange="MassCalc()">
+											<option value="1" selected="selected">kg</option>
+											<option value="2">carat</option>
+											<option value="3">grain</option>
+											<option value="4">gram</option>
+											<option value="5">lb (avdp)</option>
+											<option value="6">milligram</option>
+											<option value="7">ounce (avdp)</option>
+											<option value="8">ounce (troy)</option>
+											<option value="9">pound (troy)</option>
+											<option value="10">slug</option>
+											<option value="11">ton (long)</option>
+											<option value="12">tonne (metric)</option>
+											<option value="13">ton (short)</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Mass2" value="22.046" class="tabR2" onfocus="MassCalc()"  onchange="MassCalc()" onkeyup="MassCalc()" onblur="MassCalc()">
+										<select id="MassSel2" class="tabR3" onblur="MassCalc()" onchange="MassCalc()">
+											<option value="1">kg</option>
+											<option value="2">carat</option>
+											<option value="3">grain</option>
+											<option value="4">gram</option>
+											<option value="5" selected="selected">lb (avdp)</option>
+											<option value="6">milligram</option>
+											<option value="7">ounce (avdp)</option>
+											<option value="8">ounce (troy)</option>
+											<option value="9">pound (troy)</option>
+											<option value="10">slug</option>
+											<option value="11">ton (long)</option>
+											<option value="12">tonne (metric)</option>
+											<option value="13">ton (short)</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Press" id="PressA"> Pressure</a>
+							</div>
+							<div id="Press" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res3" class="alert alert-info">
+										Enter Pressure 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Press1" value="2" class="tabR2" onfocus="PressCalc()"  onchange="PressCalc()" onkeyup="PressCalc()" onblur="PressCalc()">
+										<select id="PressSel1" class="tabR3" onblur="PressCalc()" onchange="PressCalc()">
+											<option value="1" >kPa</option>
+											<option value="2">atm</option>
+											<option value="3">bar</option>
+											<option value="4">foot H2O</option>
+											<option value="5">inch H2O</option>
+											<option value="6">inch Hg</option>
+											<option value="7" selected="selected">kgf/cm&sup2;</option>
+											<option value="8">lbf/ft&sup2;</option>
+											<option value="9">mbar</option>
+											<option value="10">meter H2O</option>
+											<option value="11">mm H2O</option>
+											<option value="12">mm Hg (Torr)</option>
+											<option value="13">MPa</option>
+											<option value="14">Pa</option>
+											<option value="15">PSI</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Press2" value="1471.1225" class="tabR2" onfocus="PressCalc()"  onchange="PressCalc()" onkeyup="PressCalc()" onblur="PressCalc()">
+										<select id="PressSel2" class="tabR3" onblur="PressCalc()" onchange="PressCalc()">
+											<option value="1" >kPa</option>
+											<option value="2">atm</option>
+											<option value="3">bar</option>
+											<option value="4">foot H2O</option>
+											<option value="5">inch H2O</option>
+											<option value="6">inch Hg</option>
+											<option value="7" >kgf/cm&sup2;</option>
+											<option value="8">lbf/ft&sup2;</option>
+											<option value="9">mbar</option>
+											<option value="10">meter H2O</option>
+											<option value="11">mm H2O</option>
+											<option value="12" selected="selected">mm Hg (Torr)</option>
+											<option value="13">MPa</option>
+											<option value="14">Pa</option>
+											<option value="15">PSI</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+					<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Temp" id="TempA"> Temperature</a>
+							</div>
+							<div id="Temp" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res6" class="alert alert-info">
+										Enter Temperature
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Temp1" value="25.0" class="tabR2" onfocus="TempCalc()"  onchange="TempCalc()" onkeyup="TempCalc()" onblur="TempCalc()">
+										<select id="TempSel1" class="tabR3" onblur="TempCalc()" onchange="TempCalc()">
+											<option value="1" selected="selected">Celsius</option>
+        									<option value="2">Kelvin</option>
+											<option value="3">Fahrenheit</option>
+											<option value="4">Rankine</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Temp2" value="77.000" class="tabR2" onfocus="TempCalc()"  onchange="TempCalc()" onkeyup="TempCalc()" onblur="TempCalc()">
+										<select id="TempSel2" class="tabR3" onblur="TempCalc()" onchange="TempCalc()">
+											<option value="1">Celsius</option>
+        									<option value="2">Kelvin</option>
+											<option value="3" selected="selected">Fahrenheit</option>
+											<option value="4">Rankine</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>	
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Volume" id="VolA"> Volume</a>
+							</div>
+							<div id="Volume" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res9" class="alert alert-info">
+										Enter Volume 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Vol1" value="20.0" class="tabR2" onfocus="VolCalc()"  onchange="VolCalc()" onkeyup="VolCalc()" onblur="VolCalc()">
+										<select id="VolSel1" class="tabR3" onblur="VolCalc()" onchange="VolCalc()">
+											<option value="1" selected="selected">m&sup3;</option>
+											<option value="2">barrel (oil)</option>
+											<option value="3">cm&sup3; (=ml)</option>
+											<option value="4">dm&sup3; (=liter)</option>
+											<option value="5">fl. ounce (UK)</option>
+											<option value="6">fl. ounce (US)</option>
+											<option value="7">ft&sup3;</option>
+											<option value="8">gallon (UK)</option>
+											<option value="9">gallon (US)</option>
+											<option value="10">in&sup3;</option>
+											<option value="11">mm&sup3;</option>
+											<option value="12">pint (UK)</option>
+											<option value="13">pint (US)</option>
+											<option value="14">yd&sup3;</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Vol2" value="5283.441" class="tabR2" onfocus="VolCalc()"  onchange="VolCalc()" onkeyup="VolCalc()" onblur="VolCalc()">
+										<select id="VolSel2" class="tabR3" onblur="VolCalc()" onchange="VolCalc()">
+											<option value="1" >m&sup3;</option>
+											<option value="2">barrel (oil)</option>
+											<option value="3">cm&sup3; (=ml)</option>
+											<option value="4">dm&sup3; (=liter)</option>
+											<option value="5">fl. ounce (UK)</option>
+											<option value="6">fl. ounce (US)</option>
+											<option value="7">ft&sup3;</option>
+											<option value="8">gallon (UK)</option>
+											<option value="9" selected="selected">gallon (US)</option>
+											<option value="10">in&sup3;</option>
+											<option value="11">mm&sup3;</option>
+											<option value="12">pint (UK)</option>
+											<option value="13">pint (US)</option>
+											<option value="14">yd&sup3;</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Surface" id="SurfA"> Surface Tension</a>
+							</div>
+							<div id="Surface" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res10" class="alert alert-info">
+										Enter Surface Tension 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Surf1" value="200.0" class="tabR2" onfocus="SurfCalc()"  onchange="SurfCalc()" onkeyup="SurfCalc()" onblur="SurfCalc()">
+										<select id="SurfSel1" class="tabR3" onblur="SurfCalc()" onchange="SurfCalc()">
+											<option value="1" >N/m (=kg/s&sup2;)</option>
+											<option value="2" selected="selected">dyne/cm (=g/s&sup2;)</option>
+											<option value="3">erg/cm&sup2;</option>
+											<option value="4">erg/mm&sup2;</option>
+											<option value="5">gf/cm</option>
+											<option value="6">J/m&sup2;</option>
+											<option value="7">lbf/in</option>
+											<option value="8">poundal/in</option>			
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Surf2" value="0.037" class="tabR2" onfocus="SurfCalc()"  onchange="SurfCalc()" onkeyup="SurfCalc()" onblur="SurfCalc()">
+										<select id="SurfSel2" class="tabR3" onblur="SurfCalc()" onchange="SurfCalc()">
+											<option value="1" >N/m (=kg/s&sup2;)</option>
+											<option value="2">dyne/cm (=g/s&sup2;)</option>
+											<option value="3">erg/cm&sup2;</option>
+											<option value="4">erg/mm&sup2;</option>
+											<option value="5">gf/cm</option>
+											<option value="6">J/m&sup2;</option>
+											<option value="7">lbf/in</option>
+											<option value="8" selected="selected">poundal/in</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#Density" id="DenA"> Density</a>
+							</div>
+							<div id="Density" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res13" class="alert alert-info">
+										Enter Density 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Den1" value="200.0" class="tabR2" onfocus="DenCalc()"  onchange="DenCalc()" onkeyup="DenCalc()" onblur="DenCalc()">
+										<select id="DenSel1" class="tabR3" onblur="DenCalc()" onchange="DenCalc()">
+											<option value="1" >kg/m&sup3;</option>
+											<option value="2" selected="selected">g/cm&sup3; (=kg/L)</option>
+											<option value="3">g/liter</option>
+											<option value="4">lb/ft&sup3;</option>
+											<option value="5">lb/in&sup3;</option>
+											<option value="6">slug/ft&sup3;</option>		
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Den2" value="12485.592" class="tabR2" onfocus="DenCalc()"  onchange="DenCalc()" onkeyup="DenCalc()" onblur="DenCalc()">
+										<select id="DenSel2" class="tabR3" onblur="DenCalc()" onchange="DenCalc()">
+											<option value="1" >kg/m&sup3;</option>
+											<option value="2" >g/cm&sup3; (=kg/L)</option>
+											<option value="3">g/liter</option>
+											<option value="4" selected="selected">lb/ft&sup3;</option>
+											<option value="5">lb/in&sup3;</option>
+											<option value="6">slug/ft&sup3;</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#SpVol" id="SpVolA"> Specific Volume</a>
+							</div>
+							<div id="SpVol" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res14" class="alert alert-info">
+										Enter Specific Volume 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="SpVol1" value="200.0" class="tabR2" onfocus="SpVolCalc()"  onchange="SpVolCalc()" onkeyup="SpVolCalc()" onblur="SpVolCalc()">
+										<select id="SpVolSel1" class="tabR3" onblur="SpVolCalc()" onchange="SpVolCalc()">
+											<option value="1" >m&sup3;/kg</option>
+											<option value="2" selected="selected">cm&sup3;/g (=L/kg)</option>
+											<option value="3">liter/g</option>
+											<option value="4">ft&sup3;/lb</option>
+											<option value="5">in&sup3;/lb</option>
+											<option value="6">ft&sup3;/slug</option>		
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="SpVol2" value="3.204" class="tabR2" onfocus="SpVolCalc()"  onchange="SpVolCalc()" onkeyup="SpVolCalc()" onblur="SpVolCalc()">
+										<select id="SpVolSel2" class="tabR3" onblur="SpVolCalc()" onchange="SpVolCalc()">
+											<option value="1" >m&sup3;/kg</option>
+											<option value="2" >cm&sup3;/g (=L/kg)</option>
+											<option value="3">liter/g</option>
+											<option value="4" selected="selected">ft&sup3;/lb</option>
+											<option value="5">in&sup3;/lb</option>
+											<option value="6">ft&sup3;/slug</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#ViscD" id="ViscDA"> Viscosity (Dynamic)</a>
+							</div>
+							<div id="ViscD" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res17" class="alert alert-info">
+										Enter Viscosity (Dynamic) 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="ViscD1" value="1" class="tabR2" onfocus="ViscDCalc()"  onchange="ViscDCalc()" onkeyup="ViscDCalc()" onblur="ViscDCalc()">
+										<select id="ViscDSel1" class="tabR3" onblur="ViscDCalc()" onchange="ViscDCalc()">
+											<option value="1" >Pa.s</option>
+											<option value="2" >centipoise</option>
+											<option value="3">dyne.s/cm&sup2;</option>
+											<option value="4">kg/m.h</option>
+											<option value="5">kg/m.s</option>
+											<option value="6">kgf.s/m&sup2;</option>
+											<option value="7">lb/ft.h</option>
+											<option value="8" selected="selected">lb/ft.s</option>
+											<option value="9">lb/in.s</option>
+											<option value="10">lbf.s/ft&sup2;</option>
+											<option value="11">lbf.s/in&sup2;</option>
+											<option value="12">micropoise</option>
+											<option value="13">N.s/m&sup2;</option>
+											<option value="14">poise (=g/cm.s)</option>
+											<option value="15">reyn</option>		
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="ViscD2" value="1488.164" class="tabR2" onfocus="ViscDCalc()"  onchange="ViscDCalc()" onkeyup="ViscDCalc()" onblur="ViscDCalc()">
+										<select id="ViscDSel2" class="tabR3" onblur="ViscDCalc()" onchange="ViscDCalc()">
+											<option value="1" >Pa.s</option>
+											<option value="2" selected="selected">centipoise</option>
+											<option value="3">dyne.s/cm&sup2;</option>
+											<option value="4">kg/m.h</option>
+											<option value="5">kg/m.s</option>
+											<option value="6">kgf.s/m&sup2;</option>
+											<option value="7">lb/ft.h</option>
+											<option value="8">lb/ft.s</option>
+											<option value="9">lb/in.s</option>
+											<option value="10">lbf.s/ft&sup2;</option>
+											<option value="11">lbf.s/in&sup2;</option>
+											<option value="12">micropoise</option>
+											<option value="13">N.s/m&sup2;</option>
+											<option value="14">poise (=g/cm.s)</option>
+											<option value="15">reyn</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc1" href="unitconv.html#ViscK" id="ViscKA"> Viscosity (Kinematic)</a>
+							</div>
+							<div id="ViscK" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res18" class="alert alert-info">
+										Enter Viscosity (Kinematic) 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="ViscK1" value="0.002" class="tabR2" onfocus="ViscKCalc()"  onchange="ViscKCalc()" onkeyup="ViscKCalc()" onblur="ViscKCalc()">
+										<select id="ViscKSel1" class="tabR3" onblur="ViscKCalc()" onchange="ViscKCalc()">
+											<option value="1" selected="selected">m&sup2;/s</option>
+											<option value="2" >centistokes</option>
+											<option value="3">cm&sup2;/s(= stokes)</option>
+											<option value="4">ft&sup2;/h</option>
+											<option value="5">ft&sup2;/s</option>
+											<option value="6">in&sup2;/h</option>
+											<option value="7">in&sup2;/s</option>
+											<option value="8" >m&sup2;/h</option>
+											<option value="9">mm&sup2;/h</option>
+											<option value="10">mm&sup2;/s</option>													
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="ViscK2" value="2000.000" class="tabR2" onfocus="ViscKCalc()"  onchange="ViscKCalc()" onkeyup="ViscKCalc()" onblur="ViscKCalc()">
+										<select id="ViscKSel2" class="tabR3" onblur="ViscKCalc()" onchange="ViscKCalc()">
+											<option value="1" >m&sup2;/s</option>
+											<option value="2" selected="selected">centistokes</option>
+											<option value="3">cm&sup2;/s(= stokes)</option>
+											<option value="4">ft&sup2;/h</option>
+											<option value="5">ft&sup2;/s</option>
+											<option value="6">in&sup2;/h</option>
+											<option value="7">in&sup2;/s</option>
+											<option value="8" >m&sup2;/h</option>
+											<option value="9">mm&sup2;/h</option>
+											<option value="10">mm&sup2;/s</option>		
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+					</div>
+
+				</div>
+
+				<div class="span6">
+
+					
+					<div class="accordion" id="acc2">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Enthalpy" id="EnthalpyA"> Enthalpy</a>
+							</div>
+							<div id="Enthalpy" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res4" class="alert alert-info">
+										Enter Enthalpy 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Ent1" value="2.3" class="tabR2" onfocus="EntCalc()"  onchange="EntCalc()" onkeyup="EntCalc()" onblur="EntCalc()">
+										<select id="EntSel1" class="tabR3" onblur="EntCalc()" onchange="EntCalc()">
+											<option value="1">kJ/kg</option>
+											<option value="2" selected="selected">BTU/lb</option>
+											<option value="3">cal/g</option>
+											<option value="4">Chu/lb</option>
+											<option value="5">erg/g</option>
+											<option value="6">ft.lbf/lb</option>
+											<option value="7">J/g</option>
+											<option value="8">kcal/kg</option>
+											<option value="9">kgf.m/kg</option>
+											<option value="10">MJ/kg</option>
+											<option value="11">MJ/tonne</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Ent2" value="5.3498" class="tabR2" onfocus="EntCalc()"  onchange="EntCalc()" onkeyup="EntCalc()" onblur="EntCalc()">
+										<select id="EntSel2" class="tabR3" onblur="EntCalc()" onchange="EntCalc()">
+											<option value="1">kJ/kg</option>
+											<option value="2" >BTU/lb</option>
+											<option value="3">cal/g</option>
+											<option value="4">Chu/lb</option>
+											<option value="5">erg/g</option>
+											<option value="6">ft.lbf/lb</option>
+											<option value="7" selected="selected">J/g</option>
+											<option value="8">kcal/kg</option>
+											<option value="9">kgf.m/kg</option>
+											<option value="10">MJ/kg</option>
+											<option value="11">MJ/tonne</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Power" id="PowerA"> Power</a>
+							</div>
+							<div id="Power" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res5" class="alert alert-info">
+										Enter Power 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Pow1" value="2.3" class="tabR2" onfocus="PowCalc()"  onchange="PowCalc()" onkeyup="PowCalc()" onblur="PowCalc()">
+										<select id="PowSel1" class="tabR3" onblur="PowCalc()" onchange="PowCalc()">
+											<option value="1" selected="selected">kW</option>
+											<option value="2" >BTU/h</option>
+											<option value="3">BTU/s</option>
+											<option value="4">cal/s</option>
+											<option value="5">Chu/h</option>
+											<option value="6">erg/s</option>
+											<option value="7">ft.lbf/s</option>
+											<option value="8">hp (British)</option>
+											<option value="9">hp (metric)</option>
+											<option value="10">kcal/h</option>
+											<option value="11">kgf.m/s</option>
+											<option value="12">kJ/h</option>
+											<option value="13">MW</option>
+											<option value="14">ton refrigeration</option>
+											<option value="15">W (=J/s)</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Pow2" value="3.127" class="tabR2" onfocus="PowCalc()"  onchange="PowCalc()" onkeyup="PowCalc()" onblur="PowCalc()">
+										<select id="PowSel2" class="tabR3" onblur="PowCalc()" onchange="PowCalc()">
+											<option value="1">kW</option>
+											<option value="2" >BTU/h</option>
+											<option value="3">BTU/s</option>
+											<option value="4">cal/s</option>
+											<option value="5">Chu/h</option>
+											<option value="6">erg/s</option>
+											<option value="7">ft.lbf/s</option>
+											<option value="8">hp (British)</option>
+											<option value="9" selected="selected">hp (metric)</option>
+											<option value="10">kcal/h</option>
+											<option value="11">kgf.m/s</option>
+											<option value="12">kJ/h</option>
+											<option value="13">MW</option>
+											<option value="14">ton refrigeration</option>
+											<option value="15">W (=J/s)</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Energy" id="EnergyA"> Energy</a>
+							</div>
+							<div id="Energy" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res7" class="alert alert-info">
+										Enter Energy 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Eng1" value="1" class="tabR2" onfocus="EngCalc()"  onchange="EngCalc()" onkeyup="EngCalc()" onblur="EngCalc()">
+										<select id="EngSel1" class="tabR3" onblur="EngCalc()" onchange="EngCalc()">
+											<option value="1">kJ</option>
+											<option value="2">Btu</option>
+											<option value="3">cal</option>
+											<option value="4">Chu</option>
+											<option value="5">erg (=dyn.cm)</option>
+											<option value="6">ft.lbf</option>
+											<option value="7">hp.h</option>
+											<option value="8">J</option>
+											<option value="9" selected="selected">kcal</option>
+											<option value="10">kgf.m</option>
+											<option value="11">kW.h</option>
+											<option value="12">N.m</option>
+											<option value="13">therm</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Eng2" value="4.1868" class="tabR2" onfocus="EngCalc()"  onchange="EngCalc()" onkeyup="EngCalc()" onblur="EngCalc()">
+										<select id="EngSel2" class="tabR3" onblur="EngCalc()" onchange="EngCalc()">
+											<option value="1" selected="selected">kJ</option>
+											<option value="2">Btu</option>
+											<option value="3">cal</option>
+											<option value="4">Chu</option>
+											<option value="5">erg (=dyn.cm)</option>
+											<option value="6">ft.lbf</option>
+											<option value="7">hp.h</option>
+											<option value="8">J</option>
+											<option value="9" >kcal</option>
+											<option value="10">kgf.m</option>
+											<option value="11">kW.h</option>
+											<option value="12">N.m</option>
+											<option value="13">therm</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Entropy" id="EntropyA"> Entropy</a>
+							</div>
+							<div id="Entropy" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res8" class="alert alert-info">
+										Enter Entropy
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Entr1" value="2.3" class="tabR2" onfocus="EntrCalc()"  onchange="EntrCalc()" onkeyup="EntrCalc()" onblur="EntrCalc()">
+										<select id="EntrSel1" class="tabR3" onblur="EntrCalc()" onchange="EntrCalc()">
+											<option value="1">kJ/kg.K</option>
+											<option value="2" selected="selected">Btu/lb.&deg;F</option>
+											<option value="3">cal/g.&deg;C</option>
+											<option value="4">Chu/lb.&deg;C</option>
+											<option value="5">ft.lbf/lb.&deg;F</option>
+											<option value="6">J/g.&deg;C</option>
+											<option value="7">kcal/kg.&deg;C</option>
+											<option value="8">kgf.m/kg.&deg;C</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Entr2" value="9.62964" class="tabR2" onfocus="EntrCalc()"  onchange="EntrCalc()" onkeyup="EntrCalc()" onblur="EntrCalc()">
+										<select id="EntrSel2" class="tabR3" onblur="EntrCalc()" onchange="EntrCalc()">
+											<option value="1">kJ/kg.K</option>
+											<option value="2" >Btu/lb.&deg;F</option>
+											<option value="3">cal/g.&deg;C</option>
+											<option value="4">Chu/lb.&deg;C</option>
+											<option value="5">ft.lbf/lb.&deg;F</option>
+											<option value="6" selected="selected">J/g.&deg;C</option>
+											<option value="7">kcal/kg.&deg;C</option>
+											<option value="8">kgf.m/kg.&deg;C</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Heat" id="HeatA"> Heat Capacity</a>
+							</div>
+							<div id="Heat" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res11" class="alert alert-info">
+										Enter Heat Capacity
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Heat1" value="2.3" class="tabR2" onfocus="HeatCalc()"  onchange="HeatCalc()" onkeyup="HeatCalc()" onblur="HeatCalc()">
+										<select id="HeatSel1" class="tabR3" onblur="HeatCalc()" onchange="HeatCalc()">
+											<option value="1" selected="selected">kJ/kg.K</option>
+											<option value="2" >BTU/lb.&deg;F</option>
+											<option value="3">cal/g.&deg;C</option>
+											<option value="4">Chu/lb.&deg;C</option>											
+											<option value="5">ft.lbf/lb.&deg;F</option>
+											<option value="6">J/g.&deg;C</option>
+											<option value="7">kcal/kg.&deg;C</option>
+											<option value="8">kgf.m/kg.&deg;C</option>											
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Heat2" value="0.549" class="tabR2" onfocus="HeatCalc()"  onchange="HeatCalc()" onkeyup="HeatCalc()" onblur="HeatCalc()">
+										<select id="HeatSel2" class="tabR3" onblur="HeatCalc()" onchange="HeatCalc()">
+											<option value="1" >kJ/kg.K</option>
+											<option value="2" >BTU/lb.&deg;F</option>
+											<option value="3" selected="selected">cal/g.&deg;C</option>
+											<option value="4">Chu/lb.&deg;C</option>											
+											<option value="5">ft.lbf/lb.&deg;F</option>
+											<option value="6">J/g.&deg;C</option>
+											<option value="7">kcal/kg.&deg;C</option>
+											<option value="8">kgf.m/kg.&deg;C</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#HeatTC" id="HeatTCA"> Heat Transfer Coefficient</a>
+							</div>
+							<div id="HeatTC" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res12" class="alert alert-info">
+										Enter Heat Transfer Coefficient
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="HeatTC1" value="20" class="tabR2" onfocus="HeatTCCalc()"  onchange="HeatTCCalc()" onkeyup="HeatTCCalc()" onblur="HeatTCCalc()">
+										<select id="HeatTCSel1" class="tabR3" onblur="HeatTCCalc()" onchange="HeatTCCalc()">
+											<option value="1" >W/m&sup2;.K</option>
+											<option value="2" selected="selected">BTU/ft&sup2;.h.&deg;F</option>
+											<option value="3">BTU/ft&sup2;.s.&deg;F</option>
+											<option value="4">cal/cm&sup2;.s.&deg;C</option>											
+											<option value="5">Chu/ft&sup2;.h.&deg;C</option>
+											<option value="6">kcal/ft&sup2;.h.&deg;C</option>
+											<option value="7">kcal/m&sup2;.h.&deg;C</option>
+											<option value="8">kJ/m&sup2;.h.&deg;C</option>	
+											<option value="9">kW/m&sup2;.K</option>
+											<option value="10">pcu/ft&sup2;.h.&deg;C</option>
+											<option value="11">W/cm&sup2;.K</option>										
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="HeatTC2" value="97.649" class="tabR2" onfocus="HeatTCCalc()"  onchange="HeatTCCalc()" onkeyup="HeatTCCalc()" onblur="HeatTCCalc()">
+										<select id="HeatTCSel2" class="tabR3" onblur="HeatTCCalc()" onchange="HeatTCCalc()">
+											<option value="1" >W/m&sup2;.K</option>
+											<option value="2" >BTU/ft&sup2;.h.&deg;F</option>
+											<option value="3">BTU/ft&sup2;.s.&deg;F</option>
+											<option value="4">cal/cm&sup2;.s.&deg;C</option>											
+											<option value="5">Chu/ft&sup2;.h.&deg;C</option>
+											<option value="6">kcal/ft&sup2;.h.&deg;C</option>
+											<option value="7" selected="selected">kcal/m&sup2;.h.&deg;C</option>
+											<option value="8">kJ/m&sup2;.h.&deg;C</option>	
+											<option value="9">kW/m&sup2;.K</option>
+											<option value="10">pcu/ft&sup2;.h.&deg;C</option>
+											<option value="11">W/cm&sup2;.K</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Foul" id="FoulA"> Fouling Factor</a>
+							</div>
+							<div id="Foul" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res15" class="alert alert-info">
+										Enter Fouling Factor
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Foul1" value="0.003" class="tabR2" onfocus="FoulCalc()"  onchange="FoulCalc()" onkeyup="FoulCalc()" onblur="FoulCalc()">
+										<select id="FoulSel1" class="tabR3" onblur="FoulCalc()" onchange="FoulCalc()">
+											<option value="1" >m&sup2;.K/W</option>
+											<option value="2" selected="selected">ft&sup2;.h.&deg;F/BTU</option>
+											<option value="3">ft&sup2;.s.&deg;F/BTU</option>
+											<option value="4">cm&sup2;.s.&deg;C/cal</option>											
+											<option value="5">ft&sup2;.h.&deg;C/Chu</option>
+											<option value="6">ft&sup2;.h.&deg;C/kcal</option>
+											<option value="7">m&sup2;.h.&deg;C/kcal</option>
+											<option value="8">m&sup2;.h.&deg;C/kJ</option>	
+											<option value="9">m&sup2;.K/kW</option>
+											<option value="10">ft&sup2;.h.&deg;C/pcu</option>
+											<option value="11">cm&sup2;.K/W</option>										
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Foul2" value="0.001" class="tabR2" onfocus="FoulCalc()"  onchange="FoulCalc()" onkeyup="FoulCalc()" onblur="FoulCalc()">
+										<select id="FoulSel2" class="tabR3" onblur="FoulCalc()" onchange="FoulCalc()">
+											<option value="1" >m&sup2;.K/W</option>
+											<option value="2" >ft&sup2;.h.&deg;F/BTU</option>
+											<option value="3">ft&sup2;.s.&deg;F/BTU</option>
+											<option value="4">cm&sup2;.s.&deg;C/cal</option>											
+											<option value="5">ft&sup2;.h.&deg;C/Chu</option>
+											<option value="6">ft&sup2;.h.&deg;C/kcal</option>
+											<option value="7" selected="selected">m&sup2;.h.&deg;C/kcal</option>
+											<option value="8">m&sup2;.h.&deg;C/kJ</option>	
+											<option value="9">m&sup2;.K/kW</option>
+											<option value="10">ft&sup2;.h.&deg;C/pcu</option>
+											<option value="11">cm&sup2;.K/W</option>		
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Force" id="ForceA"> Force</a>
+							</div>
+							<div id="Force" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res16" class="alert alert-info">
+										Enter Force 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Force1" value="10" class="tabR2" onfocus="ForceCalc()"  onchange="ForceCalc()" onkeyup="ForceCalc()" onblur="ForceCalc()">
+										<select id="ForceSel1" class="tabR3" onblur="ForceCalc()" onchange="ForceCalc()">
+											<option value="1" selected="selected">newton</option>
+											<option value="2">dyne</option>
+											<option value="3">gram force</option>
+											<option value="4">kg force</option>
+											<option value="5">kilonewton</option>
+											<option value="6">kilopond</option>
+											<option value="7">kip</option>
+											<option value="8">long ton force</option>
+											<option value="9" >millinewton</option>
+											<option value="10">ounce force</option>
+											<option value="11">pound force</option>
+											<option value="12">poundal</option>
+											<option value="13">short ton force</option>
+											<option value="14">tonne force</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Force2" value="1.020" class="tabR2" onfocus="ForceCalc()"  onchange="ForceCalc()" onkeyup="ForceCalc()" onblur="ForceCalc()">
+										<select id="ForceSel2" class="tabR3" onblur="ForceCalc()" onchange="ForceCalc()">
+											<option value="1">newton</option>
+											<option value="2">dyne</option>
+											<option value="3">gram force</option>
+											<option value="4" selected="selected">kg force</option>
+											<option value="5">kilonewton</option>
+											<option value="6">kilopond</option>
+											<option value="7">kip</option>
+											<option value="8">long ton force</option>
+											<option value="9">millinewton</option>
+											<option value="10">ounce force</option>
+											<option value="11">pound force</option>
+											<option value="12">poundal</option>
+											<option value="13">short ton force</option>
+											<option value="14">tonne force</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#VolFlow" id="VolFlowA"> Volumetric Flowrate</a>
+							</div>
+							<div id="VolFlow" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res19" class="alert alert-info">
+										Enter Volumetric Flowrate 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="VolFlow1" value="50" class="tabR2" onfocus="VolFlowCalc()"  onchange="VolFlowCalc()" onkeyup="VolFlowCalc()" onblur="VolFlowCalc()">
+										<select id="VolFlowSel1" class="tabR3" onblur="VolFlowCalc()" onchange="VolFlowCalc()">
+											<option value="1" >m&sup3;/s</option>
+											<option value="2">barrel (oil)/h</option>
+											<option value="3">barrel (oil)/day</option>
+											<option value="4">ft&sup3;/min</option>
+											<option value="5">ft&sup3;/s</option>
+											<option value="6">gallon (UK)/h</option>
+											<option value="7">gallon (UK)/s</option>
+											<option value="8">gallon (US)/h</option>
+											<option value="9">gallon (US)/min</option>
+											<option value="10">liter/h</option>
+											<option value="11">liter/min</option>
+											<option value="12">liter/s</option>
+											<option value="13">Megaliter/day</option>
+											<option value="14">million USGPD</option>
+											<option value="15" selected="selected">m&sup3;/h</option>
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="VolFlow2" value="220.143" class="tabR2" onfocus="VolFlowCalc()"  onchange="VolFlowCalc()" onkeyup="VolFlowCalc()" onblur="VolFlowCalc()">
+										<select id="VolFlowSel2" class="tabR3" onblur="VolFlowCalc()" onchange="VolFlowCalc()">
+											<option value="1" >m&sup3;/s</option>
+											<option value="2">barrel (oil)/h</option>
+											<option value="3">barrel (oil)/day</option>
+											<option value="4">ft&sup3;/min</option>
+											<option value="5">ft&sup3;/s</option>
+											<option value="6">gallon (UK)/h</option>
+											<option value="7">gallon (UK)/s</option>
+											<option value="8">gallon (US)/h</option>
+											<option value="9" selected="selected">gallon (US)/min</option>
+											<option value="10">liter/h</option>
+											<option value="11">liter/min</option>
+											<option value="12">liter/s</option>
+											<option value="13">Megaliter/day</option>
+											<option value="14">million USGPD</option>
+											<option value="15">m&sup3;/h</option>
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#Velocity" id="VelocityA"> Velocity (Linear)</a>
+							</div>
+							<div id="Velocity" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res20" class="alert alert-info">
+										Enter Velocity (Linear) 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="Vel1" value="50" class="tabR2" onfocus="VelCalc()"  onchange="VelCalc()" onkeyup="VelCalc()" onblur="VelCalc()">
+										<select id="VelSel1" class="tabR3" onblur="VelCalc()" onchange="VelCalc()">
+											<option value="1" >m/s</option>
+											<option value="2">cm/s</option>
+											<option value="3">ft/h</option>
+											<option value="4">ft/min</option>
+											<option value="5">ft/s</option>
+											<option value="6">inch/s</option>
+											<option value="7">km/h</option>
+											<option value="8">knots</option>
+											<option value="9" selected="selected">mile/h</option>
+											<option value="10">m/h</option>
+											<option value="11">m/min</option>
+											<option value="12">yard/s</option>											
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="Vel2" value="80.467" class="tabR2" onfocus="VelCalc()"  onchange="VelCalc()" onkeyup="VelCalc()" onblur="VelCalc()">
+										<select id="VelSel2" class="tabR3" onblur="VelCalc()" onchange="VelCalc()">
+											<option value="1" >m/s</option>
+											<option value="2">cm/s</option>
+											<option value="3">ft/h</option>
+											<option value="4">ft/min</option>
+											<option value="5">ft/s</option>
+											<option value="6">inch/s</option>
+											<option value="7" selected="selected">km/h</option>
+											<option value="8">knots</option>
+											<option value="9" >mile/h</option>
+											<option value="10">m/h</option>
+											<option value="11">m/min</option>
+											<option value="12">yard/s</option>	
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc2" href="unitconv.html#ThermC" id="ThermCA"> Thermal Conductivity</a>
+							</div>
+							<div id="ThermC" class="accordion-body collapse">
+								<div class="accordion-inner">
+									
+									<div id="Res22" class="alert alert-info">
+										Enter Thermal Conductivity 
+									</div>	
+
+									<div class="calcs">
+										<input type="text" id="ThermC1" value="15" class="tabR2" onfocus="ThermCCalc()"  onchange="ThermCCalc()" onkeyup="ThermCCalc()" onblur="ThermCCalc()">
+										<select id="ThermCSel1" class="tabR3" onblur="ThermCCalc()" onchange="ThermCCalc()">
+											<option value="1" >kW/m.K</option>
+											<option value="2">BTU.in/ft&sup2;.h.&deg;F</option>
+											<option value="3" selected="selected">BTU/ft.h.&deg;F</option>
+											<option value="4">BTU/ft.s.&deg;F</option>
+											<option value="5">cal/cm.s.&deg;C</option>
+											<option value="6">kcal/m.h.&deg;C</option>
+											<option value="7">kcal/m.s.&deg;C</option>
+											<option value="8">W/cm.K</option>
+											<option value="9" >W/m.K</option>																					
+										</select>
+									</div>
+
+									<div class="calcs">
+										<input type="text" id="ThermC2" value="80.467" class="tabR2" onfocus="ThermCCalc()"  onchange="ThermCCalc()" onkeyup="ThermCCalc()" onblur="ThermCCalc()">
+										<select id="ThermCSel2" class="tabR3" onblur="ThermCCalc()" onchange="ThermCCalc()">
+											<option value="1" >kW/m.K</option>
+											<option value="2">BTU.in/ft&sup2;.h.&deg;F</option>
+											<option value="3" >BTU/ft.h.&deg;F</option>
+											<option value="4">BTU/ft.s.&deg;F</option>
+											<option value="5">cal/cm.s.&deg;C</option>
+											<option value="6" selected="selected">kcal/m.h.&deg;C</option>
+											<option value="7">kcal/m.s.&deg;C</option>
+											<option value="8">W/cm.K</option>
+											<option value="9" >W/m.K</option>		
+										</select>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>	
+
+					
+				</div>
+
+			</div>
+
+			<hr>
+
+			<footer class="text-center">
+				<p>
+					&copy; www.CheCalc.com
+				</p>
+			</footer>
+
+		</div>
+		<!-- Container Ends -->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+	</body>
+
 </html>
